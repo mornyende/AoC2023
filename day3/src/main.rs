@@ -4,9 +4,11 @@ use regex::Regex;
 
 //part 2
 fn main() {
-    let mut contents = fs::read_to_string("./input.txt")
+    let contents = fs::read_to_string("./input.txt")
         .expect("Should have been able to read the file");
 
+
+    
     let symbol = b'*';
     let split_str = contents.as_bytes();
 
@@ -26,31 +28,34 @@ fn main() {
     let mut i = 0;
     for index in indices {
         let matches = re.find_iter(&contents);
-        //if i==200 {break;}
+        //if i==20 {break;}
         let mut yes = 0;
         let mut prod = 1;
-        println!("New: {:?}",index);
+        print!("New: {:?}    ",index);
         for mat in matches {
-            if ((index+142 <= mat.end()) && (index+142 >= mat.start())) ||
-            ((index-142 <= mat.end()) && (index-142 >= mat.start())) ||
-            ((index+143 <= mat.end()) && (index+143 >= mat.start())) ||
-            ((index-143 <= mat.end()) && (index-143 >= mat.start())) ||
-            ((index+141 <= mat.end()) && (index+141 >= mat.start())) ||
-            ((index-141 <= mat.end()) && (index-141 >= mat.start())) ||
-            ((index+1 <= mat.end()) && (index+1 >= mat.start())) ||
-            ((index-1 <= mat.end()) && (index-1 >= mat.start())) 
+            if ((index+142 < mat.end()) && (index+142 >= mat.start())) ||
+            ((index-142 < mat.end()) && (index-142 >= mat.start())) ||
+            ((index+143 < mat.end()) && (index+143 >= mat.start())) ||
+            ((index-143 < mat.end()) && (index-143 >= mat.start())) ||
+            ((index+141 < mat.end()) && (index+141 >= mat.start())) ||
+            ((index-141 < mat.end()) && (index-141 >= mat.start())) ||
+            ((index+1 < mat.end()) && (index+1 >= mat.start())) ||
+            ((index-1 < mat.end()) && (index-1 >= mat.start())) 
             //(index + 1 == mat.start()) || (index - 1 == mat.end()) 
              {
-                print!("Matched: {:?} at indices ({}, {})  ", mat.as_str(), mat.start(), mat.end());
-                println!("YAY {:?}",index);yes+=1;prod=prod*mat.as_str().parse().unwrap_or(1)}
+                //print!("Matched: {:?} at indices ({}, {})      ", mat.as_str(), mat.start(), mat.end());
+                //println!("YAY {:?}",index);
+                yes+=1;prod=prod*mat.as_str().parse().unwrap_or(1)}
         }
         if yes == 2 {sum+=prod;println!("ADDED: SUM={sum}");}
+        else {println!("")}
         i += 1;
     }
 
     println!("{sum}");
 
 }
+
 
 //part 1
 /*fn main() {
